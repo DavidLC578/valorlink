@@ -22,9 +22,8 @@ export default function SignIn() {
         if (res && res.error) {
             setError(res.error)
         } else {
-            // router.push('/dashboard')
-            // router.refresh()
-            console.log("Success")
+            router.push('/home')
+            router.refresh()
         }
     };
     return (
