@@ -4,10 +4,6 @@ import db from '@/libs/db'
 import bcrypt from 'bcrypt'
 
 export const authOptions = {
-    // adapter: PrismaAdapter(db),
-    // session: {
-    //     strategy: "jwt",
-    // },
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -36,15 +32,31 @@ export const authOptions = {
                     id: userFound.id,
                     name: userFound.username,
                     email: userFound.email,
+                    isProfileComplete: userFound.isProfileComplete
                 }
             },
         }),
     ],
     pages: {
         signIn: "/auth/signin",
+    },
+    callbacks: {
+        async session({ session, token, user }) {
+            // Add custom properties to session.user
+            session.user.id = token.id
+            session.user.isProfileComplete = token.isProfileComplete
+            return session
+        },
+        async jwt({ token, user }) {
+            // The `user` object is only available on first login
+            if (user) {
+                token.id = user.id
+                token.isProfileComplete = user.isProfileComplete
+            }
+            return token
+        }
     }
-};
-
+}
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

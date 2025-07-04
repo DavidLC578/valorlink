@@ -3,14 +3,22 @@ import QuickActions from "@/components/home/QuickActions"
 import SuggestedPlayers from "@/components/home/SuggestedPlayers"
 import TipsSection from "@/components/home/TipsSection"
 import Navbar from "@/components/Navbar"
+import ProfileNotCompletedCard from "@/components/home/ProfileNotCompletedCard"
+import { authOptions } from "../api/auth/[...nextauth]/route"
+import { getServerSession } from "next-auth"
 
-
-function Home() {
+async function Home() {
+    const session = await getServerSession(authOptions)
     return (
         <main className="min-h-screen">
             <Navbar />
-            <section className="py-20 px-4 sm:px-10">
-                <div className="max-w-7xl mx-auto space-y-20">
+            <section className="py-10 px-4 sm:px-10 space-y-7">
+                {
+                    !session?.user?.isProfileComplete && (
+                        <ProfileNotCompletedCard />
+                    )
+                }
+                <div className="max-w-7xl mx-auto space-y-20 relative">
                     <QuickActions />
                     <SuggestedPlayers />
                     <TipsSection />
