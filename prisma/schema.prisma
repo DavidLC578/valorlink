@@ -29,35 +29,33 @@ model User {
 }
 
 model Player {
-  id       String @id @default(cuid())
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   String @unique
-  Region   Region @relation(fields: [regionId], references: [id])
-  regionId Int
-  Rank     Rank   @relation(fields: [rankId], references: [id])
-  rankId   Int
-  Role     Role   @relation(fields: [roleId], references: [id])
-  roleId   Int
+  id     String   @id @default(cuid())
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String   @unique
+  alias  String
+  region String
+  roles  String[]
+  rank   String
 }
 
-model Region {
-  id     Int      @id @default(autoincrement())
-  name   String   @unique
-  player Player[]
-}
+// model Region {
+//   id     Int      @id @default(autoincrement())
+//   name   String   @unique
+//   player Player[]
+// }
 
-model Rank {
-  id     Int      @id @default(autoincrement())
-  name   String // Ej: Hierro 1, Plata 3
-  tier   Int // Ej: 1 a 25 (útil para ordenar)
-  Player Player[]
-}
+// model Rank {
+//   id     Int      @id @default(autoincrement())
+//   name   String // Ej: Hierro 1, Plata 3
+//   tier   Int // Ej: 1 a 25 (útil para ordenar)
+//   Player Player[]
+// }
 
-model Role {
-  id     Int      @id @default(autoincrement())
-  name   String // Duelista, Iniciador, etc.
-  Player Player[]
-}
+// model Role {
+//   id     Int      @id @default(autoincrement())
+//   name   String // Duelista, Iniciador, etc.
+//   Player Player[]
+// }
 
 model Friendship {
   id         String           @id @default(cuid())
