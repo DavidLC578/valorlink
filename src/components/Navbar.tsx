@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Zap } from "lucide-react"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import LogoutButton from "./LogoutButton"
 
 async function Navbar() {
     const session = await getServerSession(authOptions)
@@ -54,12 +55,7 @@ async function Navbar() {
                                     <div className="flex items-center space-x-2">
                                         <p className="text-lg text-gray-300">{session.user.name}</p>
                                         <span className="bg-gray-800 h-6 w-px" aria-hidden="true"></span>
-                                        <Link
-                                            href="/api/auth/signout"
-                                            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-4 py-2 rounded-md border-0 text-sm font-medium"
-                                        >
-                                            Logout
-                                        </Link>
+                                        <LogoutButton />
                                     </div>
                                 </>
                             )

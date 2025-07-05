@@ -1,0 +1,127 @@
+[
+    {
+        "id": "iron1",
+        "name": "Iron 1",
+        "tier": 1
+    },
+    {
+        "id": "iron2",
+        "name": "Iron 2",
+        "tier": 2
+    },
+    {
+        "id": "iron3",
+        "name": "Iron 3",
+        "tier": 3
+    },
+    {
+        "id": "bronze1",
+        "name": "Bronze 1",
+        "tier": 4
+    },
+    {
+        "id": "bronze2",
+        "name": "Bronze 2",
+        "tier": 5
+    },
+    {
+        "id": "bronze3",
+        "name": "Bronze 3",
+        "tier": 6
+    },
+    {
+        "id": "silver1",
+        "name": "Silver 1",
+        "tier": 7
+    },
+    {
+        "id": "silver2",
+        "name": "Silver 2",
+        "tier": 8
+    },
+    {
+        "id": "silver3",
+        "name": "Silver 3",
+        "tier": 9
+    },
+    {
+        "id": "gold1",
+        "name": "Gold 1",
+        "tier": 10
+    },
+    {
+        "id": "gold2",
+        "name": "Gold 2",
+        "tier": 11
+    },
+    {
+        "id": "gold3",
+        "name": "Gold 3",
+        "tier": 12
+    },
+    {
+        "id": "plat1",
+        "name": "Platinum 1",
+        "tier": 13
+    },
+    {
+        "id": "plat2",
+        "name": "Platinum 2",
+        "tier": 14
+    },
+    {
+        "id": "plat3",
+        "name": "Platinum 3",
+        "tier": 15
+    },
+    {
+        "id": "diamond1",
+        "name": "Diamond 1",
+        "tier": 16
+    },
+    {
+        "id": "diamond2",
+        "name": "Diamond 2",
+        "tier": 17
+    },
+    {
+        "id": "diamond3",
+        "name": "Diamond 3",
+        "tier": 18
+    },
+    {
+        "id": "ascendant1",
+        "name": "Ascendant 1",
+        "tier": 19
+    },
+    {
+        "id": "ascendant2",
+        "name": "Ascendant 2",
+        "tier": 20
+    },
+    {
+        "id": "ascendant3",
+        "name": "Ascendant 3",
+        "tier": 21
+    },
+    {
+        "id": "immortal1",
+        "name": "Immortal 1",
+        "tier": 22
+    },
+    {
+        "id": "immortal2",
+        "name": "Immortal 2",
+        "tier": 23
+    },
+    {
+        "id": "immortal3",
+        "name": "Immortal 3",
+        "tier": 24
+    },
+    {
+        "id": "radiant",
+        "name": "Radiant",
+        "tier": 25
+    }
+]

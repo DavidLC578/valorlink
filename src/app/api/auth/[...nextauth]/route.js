@@ -39,21 +39,29 @@ export const authOptions = {
     ],
     pages: {
         signIn: "/auth/signin",
+        signOut: "/auth/signin",
+        error: "/auth/signin",
     },
     callbacks: {
-        async session({ session, token, user }) {
-            // Add custom properties to session.user
-            session.user.id = token.id
-            session.user.isProfileComplete = token.isProfileComplete
-            return session
+        async session({ session, token }) {
+            // Get the latest user data from the database
+            const user = await db.user.findUnique({
+                where: { id: token.id },
+                select: { isProfileComplete: true }
+            });
+
+            // Update the session with the latest data
+            session.user.id = token.id;
+            session.user.isProfileComplete = user?.isProfileComplete || false;
+            return session;
         },
         async jwt({ token, user }) {
             // The `user` object is only available on first login
             if (user) {
-                token.id = user.id
-                token.isProfileComplete = user.isProfileComplete
+                token.id = user.id;
+                token.isProfileComplete = user.isProfileComplete;
             }
-            return token
+            return token;
         }
     }
 }

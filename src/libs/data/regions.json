@@ -1,0 +1,22 @@
+[
+    {
+        "id": "eu",
+        "name": "Europe",
+        "emoji": "🇪🇺"
+    },
+    {
+        "id": "na",
+        "name": "North America",
+        "emoji": "🇺🇸"
+    },
+    {
+        "id": "latam",
+        "name": "Latin America",
+        "emoji": "🌎"
+    },
+    {
+        "id": "asia",
+        "name": "Asia",
+        "emoji": "🌏"
+    }
+]

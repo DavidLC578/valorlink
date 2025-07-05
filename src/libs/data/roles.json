@@ -1,0 +1,22 @@
+[
+    {
+        "id": "duelist",
+        "name": "Duelist",
+        "emoji": "🗡"
+    },
+    {
+        "id": "sentinel",
+        "name": "Sentinel",
+        "emoji": "🛡"
+    },
+    {
+        "id": "controller",
+        "name": "Controller",
+        "emoji": "🌫"
+    },
+    {
+        "id": "initiator",
+        "name": "Initiator",
+        "emoji": "⚡"
+    }
+]

@@ -11,7 +11,7 @@ export default async function ProfileNotCompletedCard() {
                 </p>
                 <div className="pt-4">
                     <Link
-                        href="/profile/edit"
+                        href="/profile/create"
                         className="inline-block bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg text-lg transition cursor-pointer"
                     >
                         Complete profile
