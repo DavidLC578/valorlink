@@ -72,14 +72,14 @@ export default function SignIn() {
                     </button>
                 </form>
 
-                <div className="relative my-6">
+                <div className="relative mt-6 mb-10">
                     <div className="absolute inset-0 flex items-center">
                         <div className="w-full border-t border-gray-700"></div>
                     </div>
                 </div>
                 <p className="mt-6 text-sm text-center text-gray-400">
-                    Already have an account?{" "}
-                    <Link href="/auth/signin" className="text-purple-400 hover:underline">Log in</Link>
+                    Don't have an account?{" "}
+                    <Link href="/auth/signup" className="text-purple-400 hover:underline">Sign up</Link>
                 </p>
             </div>
         </main>
