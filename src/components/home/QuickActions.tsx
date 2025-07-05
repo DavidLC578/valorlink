@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function QuickActions() {
     return (
         <div className="text-center space-y-4">
@@ -9,9 +11,9 @@ export default function QuickActions() {
                 <button className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-lg text-lg transition cursor-pointer">
                     Create Group
                 </button>
-                <button className="bg-gray-800 border border-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg text-lg transition cursor-pointer">
+                <Link href="/profile/create" className="bg-gray-800 border border-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg text-lg transition cursor-pointer">
                     Edit Profile
-                </button>
+                </Link>
             </div>
         </div>
     )
