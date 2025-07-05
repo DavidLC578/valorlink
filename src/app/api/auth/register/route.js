@@ -36,6 +36,17 @@ export async function POST(request) {
             );
         }
 
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>/?]).{8,}$/;
+
+        if (!passwordRegex.test(data.password)) {
+            return NextResponse.json(
+                {
+                    message: "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters",
+                    status: 400,
+                },
+            );
+        }
+
         const hashedPassword = await bcrypt.hash(data.password, 10);
         const newUser = await db.user.create({
             data: {

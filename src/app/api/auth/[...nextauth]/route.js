@@ -20,7 +20,7 @@ export const authOptions = {
                     }
                 })
 
-                if (!userFound) throw new Error('No user found')
+                if (!userFound) throw new Error('No email found')
 
                 console.log(userFound)
 
