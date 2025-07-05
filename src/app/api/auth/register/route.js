@@ -16,10 +16,8 @@ export async function POST(request) {
             return NextResponse.json(
                 {
                     message: "Email already exists",
-                },
-                {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -32,11 +30,9 @@ export async function POST(request) {
         if (usernameFound) {
             return NextResponse.json(
                 {
-                    message: "username already exists",
-                },
-                {
+                    message: "Username already exists",
                     status: 400,
-                }
+                },
             );
         }
 
@@ -51,13 +47,16 @@ export async function POST(request) {
 
         const { password: _, ...user } = newUser;
 
-        return NextResponse.json(user);
+        return NextResponse.json(
+            {
+                user,
+                status: 200,
+            },
+        );
     } catch (error) {
         return NextResponse.json(
             {
                 message: error.message,
-            },
-            {
                 status: 500,
             }
         );

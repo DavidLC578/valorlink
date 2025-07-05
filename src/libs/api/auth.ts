@@ -13,5 +13,5 @@ export const signup = async (data: User) => {
         },
     });
     const resJSON = await res.json();
-    console.log(resJSON);
+    return resJSON;
 };
