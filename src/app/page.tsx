@@ -1,12 +1,9 @@
 import Footer from "@/components/Footer"
-import Navbar from "@/components/Navbar"
 import { ArrowRight, CheckCircle, Users, MessageCircle, Filter } from "lucide-react"
 
 export default function MainPage() {
   return (
     <main className="min-h-screen">
-      {/* Navbar */}
-      <Navbar />
       {/* Hero Section */}
       <section className="relative py-20 sm:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-gray-950 to-pink-900/20"></div>
