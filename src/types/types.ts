@@ -13,3 +13,16 @@ export type StepProps = {
     next: () => void;
     prev: () => void;
 };
+
+export type PlayerInfo = {
+    player: {
+        username: string;
+        Player: {
+            alias: string;
+            region: string;
+            roles: string[];
+            rank: string;
+            availability: string;
+        } | null;
+    };
+}
