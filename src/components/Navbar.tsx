@@ -27,7 +27,7 @@ async function Navbar() {
                                     <Link href="#about" className="text-gray-300 hover:text-white transition-colors">About</Link>
                                 </nav>
 
-                                <div>
+                                <div className="flex items-center space-x-2">
                                     <Link
                                         href="/auth/signin"
                                         className="text-gray-300 hover:text-white hover:bg-gray-800 px-4 py-2 rounded-md transition-colors"
