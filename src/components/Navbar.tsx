@@ -60,7 +60,12 @@ async function Navbar() {
                                     </nav>
 
                                     <div className="flex items-center space-x-2">
-                                        <p className="text-lg text-gray-300">{session.user.name}</p>
+                                        <Link
+                                            href={`/profile/${session.user.name}`}
+                                            className="text-lg text-gray-300 hover:text-white transition-colors cursor-pointer"
+                                        >
+                                            {session.user.name}
+                                        </Link>
                                         <span className="bg-gray-800 h-6 w-px" aria-hidden="true"></span>
                                         <LogoutButton />
                                     </div>
