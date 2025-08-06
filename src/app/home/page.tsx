@@ -22,7 +22,6 @@ async function Home() {
                     <TipsSection />
                 </div>
             </section>
-            <Footer />
         </main>
     )
 }

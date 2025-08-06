@@ -105,7 +105,6 @@ export default function MainPage() {
           </div>
         </div>
       </section>
-      <Footer />
     </main >
   )
 }
