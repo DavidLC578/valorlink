@@ -3,6 +3,7 @@ import { PlayerInfo } from "@/types/types"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { MapPin, Calendar, Trophy, Users, Gamepad2, Star } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 
 function ProfileComponent() {
@@ -10,7 +11,7 @@ function ProfileComponent() {
     const [playerInfo, setPlayerInfo] = useState<PlayerInfo>()
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
+    const router = useRouter()
     const { username } = useParams()
 
     useEffect(() => {
@@ -22,6 +23,9 @@ function ProfileComponent() {
                     throw new Error('Failed to load profile');
                 }
                 const data = await res.json();
+                if (!data.player.Player) {
+                    router.push('/home')
+                }
                 setPlayerInfo(data);
             } catch (err) {
                 const errorMessage = err instanceof Error ? err.message : 'An error occurred';
@@ -40,7 +44,7 @@ function ProfileComponent() {
     return (
         <>
             {
-                loading ? (
+                loading || !playerInfo?.player.Player ? (
                     <div className="flex justify-center items-center h-screen">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
                     </div>
