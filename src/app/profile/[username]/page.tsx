@@ -119,15 +119,25 @@ function ProfileComponent() {
 
                                 {/* Availability */}
                                 <div className="bg-slate-800/50 border border-slate-700 backdrop-blur-sm hover:bg-slate-800/70 transition-colors p-6 rounded-xl">
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-4 w-full">
                                         <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
                                             <Users className="w-6 h-6 text-green-400" />
                                         </div>
-                                        <div>
+                                        <div className="items-center gap-2 flex-1">
                                             <p className="text-slate-400 text-sm font-medium uppercase tracking-wide">Availability</p>
-                                            <p className="text-white text-2xl font-bold">
-                                                {playerInfo?.player.Player?.availability?.toUpperCase() || 'Available'}
-                                            </p>
+                                            <div className="flex items-center gap-2 w-full">
+                                                <select
+                                                    className="text-white text-2xl font-bold bg-transparent border-none focus:outline-none cursor-pointer w-full"
+                                                    defaultValue={playerInfo?.player.Player?.availability || 'Available'}
+                                                    onChange={(e) => {
+                                                        console.log('Availability changed to:', e.target.value)
+
+                                                    }}
+                                                >
+                                                    <option className="text-white bg-slate-800" value="Available">Available</option>
+                                                    <option className="text-white bg-slate-800" value="Not available">Not available</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
