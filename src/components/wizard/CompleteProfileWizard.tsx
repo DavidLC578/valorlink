@@ -21,6 +21,7 @@ export default function CompleteProfileWizard() {
         roles: [],
         rank: '',
         alias: '',
+        description: '',
     });
 
     const next = () => { setStep((s) => s + 1); console.log(form) };

@@ -10,6 +10,7 @@ import { StepProps } from '@/types/types';
 
 export default function PlayerStep({ data, setData, prev }: StepProps) {
     const [alias, setAlias] = useState(data.alias || '');
+    const [description, setDescription] = useState(data.description || '');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const router = useRouter();
@@ -26,7 +27,7 @@ export default function PlayerStep({ data, setData, prev }: StepProps) {
             const res = await fetch('/api/profile/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...data, alias: alias.trim() }),
+                body: JSON.stringify({ ...data, alias: alias.trim(), description: description.trim() }),
             });
 
             if (!res.ok) {
@@ -57,7 +58,7 @@ export default function PlayerStep({ data, setData, prev }: StepProps) {
         >
             <h2 className="text-2xl font-semibold mb-4 text-center">Alias and Confirmation</h2>
 
-            <div className="mb-4">
+            <form className="mb-4">
                 <label className="block text-sm font-medium mb-1">Valorant Alias</label>
                 <input
                     type="text"
@@ -66,8 +67,15 @@ export default function PlayerStep({ data, setData, prev }: StepProps) {
                     placeholder="Ej: TenZ#1337"
                     className="w-full p-2 border rounded-lg"
                 />
+                <label className="block text-sm font-medium mb-1">Description</label>
+                <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Describe yourself"
+                    className="w-full p-2 border rounded-lg"
+                />
                 {error && <p className="text-red-600 text-sm mt-1">{error}</p>}
-            </div>
+            </form>
 
             <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 mb-6 text-sm">
                 <p><strong>Region:</strong> {selectedRegion?.emoji} {selectedRegion?.name}</p>

@@ -80,8 +80,7 @@ function ProfileComponent() {
                                 </div>
 
                                 <p className="text-slate-300 text-lg leading-relaxed max-w-2xl">
-                                    Competitive player focused on tactical gameplay and team coordination.
-                                    Always looking to improve and climb the ranks.
+                                    {playerInfo?.player.Player?.description}
                                 </p>
                             </div>
                         </div>

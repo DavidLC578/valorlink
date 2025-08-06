@@ -29,13 +29,14 @@ model User {
 }
 
 model Player {
-  id     String   @id @default(cuid())
-  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String   @unique
-  alias  String
-  region String
-  roles  String[]
-  rank   String
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String   @unique
+  alias       String
+  description String?
+  region      String
+  roles       String[]
+  rank        String
 }
 
 model Friendship {

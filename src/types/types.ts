@@ -5,6 +5,7 @@ export type WizardData = {
     roles: string[];
     rank: string;
     alias: string;
+    description: string;
 };
 
 export type StepProps = {
@@ -19,6 +20,7 @@ export type PlayerInfo = {
         username: string;
         Player: {
             alias: string;
+            description: string;
             region: string;
             roles: string[];
             rank: string;

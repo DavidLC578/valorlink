@@ -18,7 +18,7 @@ export async function POST(request) {
     }
 
     const data = await request.json();
-    const { alias, region, rank, roles } = data
+    const { alias, description, region, rank, roles } = data
 
     try {
         const user = await db.user.findUnique({
@@ -39,10 +39,11 @@ export async function POST(request) {
         }
         const createdPlayer = await db.player.upsert({
             where: { userId: user.id },
-            update: { alias, region, roles, rank },
+            update: { alias, description, region, roles, rank },
             create: {
                 userId: user.id,
                 alias,
+                description,
                 region,
                 roles,
                 rank,
