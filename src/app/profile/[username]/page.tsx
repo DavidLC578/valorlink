@@ -129,9 +129,17 @@ function ProfileComponent() {
                                                 <select
                                                     className="text-white text-2xl font-bold bg-transparent border-none focus:outline-none cursor-pointer w-full"
                                                     defaultValue={playerInfo?.player.Player?.availability || 'Available'}
-                                                    onChange={(e) => {
+                                                    onChange={async (e) => {
                                                         console.log('Availability changed to:', e.target.value)
-
+                                                        const response = await fetch(`/api/profile/${playerInfo?.player.username}`, {
+                                                            method: 'PUT',
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                            },
+                                                            body: JSON.stringify({ availability: e.target.value }),
+                                                        });
+                                                        const data = await response.json();
+                                                        console.log(data);
                                                     }}
                                                 >
                                                     <option className="text-white bg-slate-800" value="Available">Available</option>

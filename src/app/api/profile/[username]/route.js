@@ -52,3 +52,61 @@ export async function GET(request, { params }) {
         );
     }
 }
+
+export async function PUT(request, { params }) {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.email) {
+        return NextResponse.json(
+            {
+                message: "Unauthorized",
+            },
+            {
+                status: 401,
+            }
+        );
+    }
+
+    const { username } = await params
+    const data = await request.json();
+    const { availability } = data
+
+    try {
+        const playerUpdated = await db.user.update({
+            where: {
+                username: username
+            },
+            data: {
+                Player: {
+                    update: {
+                        availability: availability
+                    }
+                }
+            }
+        })
+
+        if (!playerUpdated) {
+            return NextResponse.json(
+                {
+                    message: "Player not updated",
+                },
+                {
+                    status: 400,
+                }
+            );
+        }
+
+
+        return NextResponse.json({ playerUpdated }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json(
+            {
+                message: error.message,
+            },
+            {
+                status: 500,
+            }
+        );
+    }
+
+}
