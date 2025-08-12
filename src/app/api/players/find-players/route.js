@@ -21,7 +21,16 @@ export async function POST(request) {
     try {
         const { region, role, rank } = await request.json();
 
-        const where = {};
+        // Obtener el usuario actual para excluirlo de los resultados
+        const currentUser = await db.user.findUnique({
+            where: { email: session.user.email },
+            include: { Player: true }
+        });
+
+        const where = {
+            availability: 'Available', // Solo mostrar jugadores disponibles
+            userId: { not: currentUser.id } // Excluir al usuario actual
+        };
         if (region) where.region = region;
         if (role) where.roles = { has: role };
         if (rank) where.rank = rank;
