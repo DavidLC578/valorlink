@@ -130,7 +130,7 @@ function ProfileComponent() {
                                                     className="text-white text-2xl font-bold bg-transparent border-none focus:outline-none cursor-pointer w-full"
                                                     defaultValue={playerInfo?.player.Player?.availability || 'Available'}
                                                     onChange={async (e) => {
-                                                        const response = await fetch(`/api/profile/${playerInfo?.player.username}`, {
+                                                        const response = await fetch(`/api/profile/${playerInfo?.player.Player?.userId}`, {
                                                             method: 'PUT',
                                                             headers: {
                                                                 'Content-Type': 'application/json',

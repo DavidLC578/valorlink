@@ -20,6 +20,7 @@ export type PlayerInfo = {
         username: string;
         Player: {
             alias: string;
+            userId: string;
             description: string;
             region: string;
             roles: string[];
