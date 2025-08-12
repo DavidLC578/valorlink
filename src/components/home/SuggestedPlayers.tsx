@@ -5,30 +5,6 @@ import { Gamepad2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import PlayerCardSkeleton from "./SugPlayers/PlayerCardSkeleton";
 
-const fakePlayers = [
-    {
-        name: "SovaMain#EU",
-        rank: "Diamond 2",
-        agent: "Sova",
-        availability: "Afternoons",
-        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sova"
-    },
-    {
-        name: "JettQueen#SP",
-        rank: "Platinum 1",
-        agent: "Jett",
-        availability: "Weekends",
-        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jett"
-    },
-    {
-        name: "OmenGod#Night",
-        rank: "Immortal",
-        agent: "Omen",
-        availability: "Nights",
-        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Omen"
-    }
-]
-
 export default function SuggestedPlayers() {
     const [suggestedPlayers, setSuggestedPlayers] = useState<Player[]>([])
     const [isLoading, setIsLoading] = useState(true);
