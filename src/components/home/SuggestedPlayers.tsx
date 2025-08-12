@@ -4,6 +4,7 @@ import { getSuggestedPlayers } from "@/libs/api/sugPlayers";
 import { Gamepad2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import PlayerCardSkeleton from "./SugPlayers/PlayerCardSkeleton";
+import Link from "next/link";
 
 export default function SuggestedPlayers() {
     const [suggestedPlayers, setSuggestedPlayers] = useState<Player[]>([])
@@ -40,19 +41,21 @@ export default function SuggestedPlayers() {
                             key={id}
                             className="bg-gray-900/60 border border-gray-700 rounded-xl p-6 hover:bg-gray-800/80 transition transform hover:scale-105 cursor-pointer"
                         >
-                            <div className="flex items-center gap-4 mb-4">
-                                <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
-                                    <Gamepad2 className="w-6 h-6 text-green-400" />
+                            <Link href={`/profile/${player.userId}`}>
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+                                        <Gamepad2 className="w-6 h-6 text-green-400" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold">{player.alias}</h3>
+                                        <p className="text-sm text-gray-400">{player.rank.charAt(0).toUpperCase() + player.rank.slice(1)}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 className="text-xl font-semibold">{player.alias}</h3>
-                                    <p className="text-sm text-gray-400">{player.rank.charAt(0).toUpperCase() + player.rank.slice(1)}</p>
-                                </div>
-                            </div>
-                            <p className="text-sm text-gray-300">
-                                Roles: <span className="text-white">{player.roles.join(", ").charAt(0).toUpperCase() + player.roles.join(", ").slice(1)}</span><br />
-                                Region: {player.region.toUpperCase()}
-                            </p>
+                                <p className="text-sm text-gray-300">
+                                    Roles: <span className="text-white">{player.roles.join(", ").charAt(0).toUpperCase() + player.roles.join(", ").slice(1)}</span><br />
+                                    Region: {player.region.toUpperCase()}
+                                </p>
+                            </Link>
                             <button className="mt-4 w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded-md transition cursor-pointer">
                                 Send friend request
                             </button>

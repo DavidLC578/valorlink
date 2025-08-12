@@ -1,4 +1,5 @@
 import { Player } from "@/generated/prisma";
+import Link from "next/link";
 
 export default function Table({ players }: { players: Player[] }) {
     return (
@@ -22,12 +23,12 @@ export default function Table({ players }: { players: Player[] }) {
                 </thead>
                 <tbody className="divide-y divide-gray-700 bg-gray-900">
                     {players.map((player) => (
-                        <tr key={player.id} className="hover:bg-gray-800 transition-colors duration-150">
+                        <tr key={player.userId} className="hover:bg-gray-800 transition-colors duration-150">
                             <td className="whitespace-nowrap px-6 py-4">
                                 <div className="flex items-center">
-                                    <div className="ml-4">
+                                    <Link href={`/profile/${player.userId}`} className="ml-4">
                                         <div className="text-md font-medium text-white">{player.alias}</div>
-                                    </div>
+                                    </Link>
                                 </div>
                             </td>
                             <td className="whitespace-nowrap px-6 py-4">
