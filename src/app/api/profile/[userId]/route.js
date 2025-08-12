@@ -17,12 +17,13 @@ export async function GET(request, { params }) {
         );
     }
 
-    const { username } = await params
+    const { userId } = await params
+    console.log(userId)
 
     try {
         const player = await db.user.findUnique({
             where: {
-                username: username
+                id: userId
             },
             select: {
                 username: true,
@@ -67,14 +68,14 @@ export async function PUT(request, { params }) {
         );
     }
 
-    const { username } = await params
+    const { userId } = await params
     const data = await request.json();
     const { availability } = data
 
     try {
         const playerUpdated = await db.user.update({
             where: {
-                username: username
+                id: userId
             },
             data: {
                 Player: {

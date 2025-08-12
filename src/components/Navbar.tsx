@@ -61,7 +61,7 @@ async function Navbar() {
 
                                     <div className="flex items-center space-x-2">
                                         <Link
-                                            href={`/profile/${session.user.name}`}
+                                            href={`/profile/${session.user.id}`}
                                             className="text-lg text-gray-300 hover:text-white transition-colors cursor-pointer"
                                         >
                                             {session.user.name}

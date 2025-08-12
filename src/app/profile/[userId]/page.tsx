@@ -12,13 +12,13 @@ function ProfileComponent() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter()
-    const { username } = useParams()
+    const { userId } = useParams()
 
     useEffect(() => {
         const fetchPlayer = async () => {
             try {
                 setLoading(true);
-                const res = await fetch(`/api/profile/${username}`);
+                const res = await fetch(`/api/profile/${userId}`);
                 if (!res.ok) {
                     throw new Error('Failed to load profile');
                 }
@@ -36,10 +36,10 @@ function ProfileComponent() {
             }
         };
 
-        if (username) {
+        if (userId) {
             fetchPlayer();
         }
-    }, [username])
+    }, [userId])
 
     return (
         <>
