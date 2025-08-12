@@ -7,15 +7,24 @@ import PlayerCardSkeleton from "./SugPlayers/PlayerCardSkeleton";
 import Link from "next/link";
 
 export default function SuggestedPlayers() {
-    const [suggestedPlayers, setSuggestedPlayers] = useState<Player[]>([])
+    const [suggestedPlayers, setSuggestedPlayers] = useState<Player[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [hasProfile, setHasProfile] = useState(true);
 
     useEffect(() => {
         const fetchSuggestedPlayers = async () => {
             try {
                 setIsLoading(true);
-                const players = await getSuggestedPlayers();
-                setSuggestedPlayers(players.suggestedPlayers);
+                const response = await getSuggestedPlayers();
+                console.log(response);
+
+                if (!response.success) {
+                    if (response.hasProfile === false) {
+                        setHasProfile(false);
+                    }
+                    return;
+                }
+                setSuggestedPlayers(response.suggestedPlayers || []);
             } catch (error) {
                 console.error('Error fetching suggested players:', error);
             } finally {
@@ -31,10 +40,32 @@ export default function SuggestedPlayers() {
                 Recommended Players for You
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {isLoading ? (
+                {!hasProfile ? (
+                    <div className="col-span-full text-center py-8">
+                        <div className="bg-gray-900/60 border border-gray-700 rounded-xl p-6 max-w-md mx-auto">
+                            <Gamepad2 className="w-12 h-12 text-gray-500 mx-auto mb-4" />
+                            <h3 className="text-xl font-semibold text-gray-300 mb-2">You don't have a player profile</h3>
+                            <p className="text-gray-400 mb-4">Create your profile to see recommended players</p>
+                            <Link
+                                href="/profile/create"
+                                className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+                            >
+                                Create profile
+                            </Link>
+                        </div>
+                    </div>
+                ) : isLoading ? (
                     Array(3).fill(0).map((_, index) => (
                         <PlayerCardSkeleton key={`skeleton-${index}`} />
                     ))
+                ) : suggestedPlayers.length === 0 ? (
+                    <div className="col-span-full text-center py-8">
+                        <div className="bg-gray-900/60 border border-gray-700 rounded-xl p-6 max-w-md mx-auto">
+                            <Gamepad2 className="w-12 h-12 text-gray-500 mx-auto mb-4" />
+                            <h3 className="text-xl font-semibold text-gray-300">No recommended players available</h3>
+                            <p className="text-gray-400 mt-2">Try again later</p>
+                        </div>
+                    </div>
                 ) : (
                     suggestedPlayers.map((player, id) => (
                         <div
