@@ -16,7 +16,6 @@ export default function SuggestedPlayers() {
             try {
                 setIsLoading(true);
                 const response = await getSuggestedPlayers();
-                console.log(response);
 
                 if (!response.success) {
                     if (response.hasProfile === false) {

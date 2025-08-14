@@ -57,11 +57,11 @@ export async function GET(request) {
         const shuffled = candidates.sort(() => 0.5 - Math.random());
         const suggestedPlayers = shuffled.slice(0, 3);
 
-        return NextResponse.json({ suggestedPlayers }, { status: 200 });
+        return NextResponse.json({ success: true, suggestedPlayers }, { status: 200 });
     } catch (error) {
         console.error('Error in sugPlayers API:', error);
         return NextResponse.json(
-            { message: 'Internal server error' },
+            { success: false, message: 'Internal server error' },
             { status: 500 }
         );
     }
