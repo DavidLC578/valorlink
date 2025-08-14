@@ -4,7 +4,7 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { MapPin, Calendar, Trophy, Users, Gamepad2, Star } from "lucide-react"
 import { useRouter } from "next/navigation"
-
+import { useSession } from "next-auth/react"
 
 function ProfileComponent() {
 
@@ -13,6 +13,17 @@ function ProfileComponent() {
     const [error, setError] = useState<string | null>(null);
     const router = useRouter()
     const { userId } = useParams()
+    const { data: session } = useSession() as {
+        data: {
+            user: {
+                id: string
+                name?: string | null
+                email?: string | null
+                image?: string | null
+                isProfileComplete?: boolean
+            }
+        } | null
+    }
 
     useEffect(() => {
         const fetchPlayer = async () => {
@@ -40,6 +51,8 @@ function ProfileComponent() {
             fetchPlayer();
         }
     }, [userId])
+
+    const isOwner = session?.user?.id === playerInfo?.player.Player?.userId
 
     return (
         <>
@@ -126,23 +139,27 @@ function ProfileComponent() {
                                         <div className="items-center gap-2 flex-1">
                                             <p className="text-slate-400 text-sm font-medium uppercase tracking-wide">Availability</p>
                                             <div className="flex items-center gap-2 w-full">
-                                                <select
-                                                    className="text-white text-2xl font-bold bg-transparent border-none focus:outline-none cursor-pointer w-full"
-                                                    defaultValue={playerInfo?.player.Player?.availability || 'Available'}
-                                                    onChange={async (e) => {
-                                                        const response = await fetch(`/api/profile/${playerInfo?.player.Player?.userId}`, {
-                                                            method: 'PUT',
-                                                            headers: {
-                                                                'Content-Type': 'application/json',
-                                                            },
-                                                            body: JSON.stringify({ availability: e.target.value }),
-                                                        });
-                                                        const data = await response.json();
-                                                    }}
-                                                >
-                                                    <option className="text-white bg-slate-800" value="Available">Available</option>
-                                                    <option className="text-white bg-slate-800" value="Not available">Not available</option>
-                                                </select>
+                                                {isOwner ? (
+                                                    <select
+                                                        className="text-white text-2xl font-bold bg-transparent border-none focus:outline-none cursor-pointer w-full"
+                                                        defaultValue={playerInfo?.player.Player?.availability || 'Available'}
+                                                        onChange={async (e) => {
+                                                            const response = await fetch(`/api/profile/${playerInfo?.player.Player?.userId}`, {
+                                                                method: 'PUT',
+                                                                headers: { 'Content-Type': 'application/json' },
+                                                                body: JSON.stringify({ availability: e.target.value }),
+                                                            })
+                                                            await response.json()
+                                                        }}
+                                                    >
+                                                        <option className="text-white bg-slate-800" value="Available">Available</option>
+                                                        <option className="text-white bg-slate-800" value="Not available">Not available</option>
+                                                    </select>
+                                                ) : (
+                                                    <span className="text-white text-2xl font-bold">
+                                                        {playerInfo?.player.Player?.availability || 'Available'}
+                                                    </span>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
