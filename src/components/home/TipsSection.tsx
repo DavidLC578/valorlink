@@ -1,7 +1,7 @@
 const tips = [
-    "Use voice chat to improve coordination.",
-    "Look for teammates with similar rank for competitive play.",
-    "Add roles to your profile: support, entry, lurker...",
+    "Complete your profile to get the most out of ValorLink.",
+    "Find your ideal teammates with our smart filters.",
+    "You can add friends clicking on their profile",
     "Avoid playing when tilted. Take breaks between matches."
 ]
 
