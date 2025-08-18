@@ -18,7 +18,6 @@ export async function GET(request, { params }) {
     }
 
     const { userId } = await params
-    console.log(userId)
 
     try {
         const player = await db.user.findUnique({

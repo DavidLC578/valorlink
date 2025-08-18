@@ -18,7 +18,6 @@ export default function SignIn() {
             redirect: false,
         });
 
-        console.log(res)
         if (res && res.error) {
             setError(res.error)
         } else {

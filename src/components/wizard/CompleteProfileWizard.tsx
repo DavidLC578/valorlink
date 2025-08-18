@@ -24,7 +24,7 @@ export default function CompleteProfileWizard() {
         description: '',
     });
 
-    const next = () => { setStep((s) => s + 1); console.log(form) };
+    const next = () => { setStep((s) => s + 1); };
     const prev = () => setStep((s) => s - 1);
 
     const StepComponent = steps[step];

@@ -64,8 +64,6 @@ function ProfileComponent() {
                 }),
             });
             const data = await response.json();
-            // Manejar respuesta (mostrar notificación, etc.)
-            console.log(data)
         } catch (error) {
             console.error('Error sending friend request:', error);
         }

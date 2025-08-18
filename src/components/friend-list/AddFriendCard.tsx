@@ -17,9 +17,7 @@ export default function AddFriendCard() {
                 body: JSON.stringify({ username }),
             }
         )
-        console.log("Res: ", res)
         const data = await res.json()
-        console.log("data: ", data)
         setMessage(data.message)
     }
 
