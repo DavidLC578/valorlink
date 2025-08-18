@@ -1,5 +1,4 @@
 'use client'
-import { div } from "framer-motion/client"
 import { Check, Clock, MapPin, Search, Trophy, X } from "lucide-react"
 import { useState } from "react"
 
