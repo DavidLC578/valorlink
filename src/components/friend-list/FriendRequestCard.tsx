@@ -94,37 +94,40 @@ export default function FriendRequestCard() {
                             </div>
                         </div>
                     ) : (
-                        outgoing.map((player) => (
-                            <div className="flex gap-2 items-center justify-between" key={player.id}>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-12 h-12 sm:w-11 sm:h-12 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 p-1">
-                                        <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center">
-                                            <span className="text-xl sm:text-xl md:text-xl font-bold text-white">
-                                                {player.alias.charAt(0).toUpperCase()}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold mb-1">{player.alias}</p>
-                                        <div className="flex gap-7">
-                                            <div className="flex items-center gap-1">
-                                                <Trophy className="w-4 h-4 text-purple-400" />
-                                                <p className="text-slate-300/70">{player.rank.charAt(0).toUpperCase() + player.rank.slice(1)}</p>
-                                            </div>
-                                            <div className="flex items-center gap-1">
-                                                <MapPin className="w-4 h-4 text-purple-400" />
-                                                <p className="text-slate-300/70">{player.region.toUpperCase()}</p>
+                        outgoing.length === 0 ? (
+                            <p className="text-white text-center">No friend requests</p>
+                        ) : (
+                            outgoing.map((player) => (
+                                <div className="flex gap-2 items-center justify-between" key={player.id}>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-12 h-12 sm:w-11 sm:h-12 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 p-1">
+                                            <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center">
+                                                <span className="text-xl sm:text-xl md:text-xl font-bold text-white">
+                                                    {player.alias.charAt(0).toUpperCase()}
+                                                </span>
                                             </div>
                                         </div>
+                                        <div>
+                                            <p className="font-semibold mb-1">{player.alias}</p>
+                                            <div className="flex gap-7">
+                                                <div className="flex items-center gap-1">
+                                                    <Trophy className="w-4 h-4 text-purple-400" />
+                                                    <p className="text-slate-300/70">{player.rank.charAt(0).toUpperCase() + player.rank.slice(1)}</p>
+                                                </div>
+                                                <div className="flex items-center gap-1">
+                                                    <MapPin className="w-4 h-4 text-purple-400" />
+                                                    <p className="text-slate-300/70">{player.region.toUpperCase()}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <p className="text-sm py-1 px-2 rounded-lg bg-slate-400/20">
+                                            Pending
+                                        </p>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <p className="text-sm py-1 px-2 rounded-lg bg-slate-400/20">
-                                        Pending
-                                    </p>
-                                </div>
-                            </div>
-                        )))}
+                            ))))}
                 </div>
 
                 {/* Paginación */}
@@ -140,7 +143,7 @@ export default function FriendRequestCard() {
                     <button
                         onClick={() => setPage(prev => prev + 1)}
                         disabled={page === total}
-                        className="px-4 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700"
+                        className={`px-4 py-2 rounded-lg font-medium ${page === total ? 'bg-slate-700 text-slate-500 cursor-not-allowed' : 'bg-purple-600 text-white hover:bg-purple-700'}`}
                     >
                         Siguiente
                     </button>
