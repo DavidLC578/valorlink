@@ -41,7 +41,6 @@ export async function GET(request) {
             }
         })
 
-        // Extraer solo los Players de los resultados
         const players = friendships.map(friendship => friendship.receiver.Player)
 
         return NextResponse.json({ players, total: totalCount }, { status: 200 });
