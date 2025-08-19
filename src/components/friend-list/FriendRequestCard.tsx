@@ -2,13 +2,16 @@
 import { Player } from "@/generated/prisma"
 import { Check, Clock, MapPin, Search, Trophy, X } from "lucide-react"
 import { useEffect, useState } from "react"
+import PaginationButtons from "./PaginationButtons"
 
 export default function FriendRequestCard() {
     const [activeTab, setActiveTab] = useState('incoming')
 
     const [page, setPage] = useState(1)
     const [outgoing, setOutgoing] = useState<Player[]>([])
-    const [total, setTotal] = useState(0)
+    const [incoming, setIncoming] = useState<Player[]>([])
+    const [totalIncoming, setTotalIncoming] = useState(0)
+    const [totalOutgoing, setTotalOutgoing] = useState(0)
 
     useEffect(() => {
         const handleOutgoing = async () => {
@@ -20,9 +23,24 @@ export default function FriendRequestCard() {
             })
             const data = await res.json()
             setOutgoing(data.players)
-            setTotal(data.total)
+            setTotalOutgoing(data.total)
         }
         handleOutgoing()
+    }, [page])
+
+    useEffect(() => {
+        const handleIncoming = async () => {
+            const res = await fetch(`/api/friends/incoming?page=${page}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            const data = await res.json()
+            setIncoming(data.players)
+            setTotalIncoming(data.total)
+        }
+        handleIncoming()
     }, [page])
 
     return (
@@ -45,13 +63,13 @@ export default function FriendRequestCard() {
             <div className="w-full">
                 <div className="grid grid-cols-2 bg-slate-700 p-1 h-10 rounded-lg mb-6 gap-2">
                     <button
-                        onClick={() => setActiveTab('incoming')}
+                        onClick={() => { setActiveTab('incoming'); setPage(1) }}
                         className={`text-sm font-medium rounded-md ${activeTab === 'incoming' ? 'bg-purple-500 text-white' : ' text-white'}`}
                     >
                         Incoming
                     </button>
                     <button
-                        onClick={() => setActiveTab('outgoing')}
+                        onClick={() => { setActiveTab('outgoing'); setPage(1) }}
                         className={`text-sm font-medium rounded-md ${activeTab === 'outgoing' ? 'bg-purple-500 text-white' : ' text-white'}`}
                     >
                         Outgoing
@@ -60,40 +78,44 @@ export default function FriendRequestCard() {
 
                 <div className="mt-0 bg-slate-700 p-3 rounded-lg">
                     {activeTab === 'incoming' ? (
-                        <div className="flex gap-2 items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <div className="w-12 h-12 sm:w-11 sm:h-12 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 p-1">
-                                    <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center">
-                                        <span className="text-xl sm:text-xl md:text-xl font-bold text-white">
-                                            D
-                                        </span>
+                        incoming.length === 0 ? (
+                            <p className="text-white text-center">No friend requests</p>
+                        ) : (
+                            incoming.map((player) => (
+                                <div className="flex gap-2 items-center justify-between" key={player.id}>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-12 h-12 sm:w-11 sm:h-12 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 p-1">
+                                            <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center">
+                                                <span className="text-xl sm:text-xl md:text-xl font-bold text-white">
+                                                    {player.alias.charAt(0).toUpperCase()}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold mb-1">{player.alias}</p>
+                                            <p>@{player.alias}</p>
+                                            <div className="flex gap-7">
+                                                <div className="flex items-center gap-1">
+                                                    <Trophy className="w-4 h-4 text-purple-400" />
+                                                    <p className="text-slate-300/70">{player.rank.charAt(0).toUpperCase() + player.rank.slice(1)}</p>
+                                                </div>
+                                                <div className="flex items-center gap-1">
+                                                    <MapPin className="w-4 h-4 text-purple-400" />
+                                                    <p className="text-slate-300/70">{player.region.toUpperCase()}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <button className="px-4 py-2 rounded-lg bg-green-500 text-white font-semibold">
+                                            <Check className="w-4 h-4 text-white" />
+                                        </button>
+                                        <button className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold">
+                                            <X className="w-4 h-4 text-white" />
+                                        </button>
                                     </div>
                                 </div>
-                                <div>
-                                    <p className="font-semibold mb-1">New player</p>
-                                    <p>@NewPlayer</p>
-                                    <div className="flex gap-7">
-                                        <div className="flex items-center gap-1">
-                                            <Trophy className="w-4 h-4 text-purple-400" />
-                                            <p className="text-slate-300/70">Rank</p>
-                                        </div>
-                                        <div className="flex items-center gap-1">
-                                            <MapPin className="w-4 h-4 text-purple-400" />
-                                            <p className="text-slate-300/70">Region</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <button className="px-4 py-2 rounded-lg bg-green-500 text-white font-semibold">
-                                    <Check className="w-4 h-4 text-white" />
-                                </button>
-                                <button className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold">
-                                    <X className="w-4 h-4 text-white" />
-                                </button>
-                            </div>
-                        </div>
-                    ) : (
+                            )))) : (
                         outgoing.length === 0 ? (
                             <p className="text-white text-center">No friend requests</p>
                         ) : (
@@ -131,24 +153,14 @@ export default function FriendRequestCard() {
                 </div>
 
                 {/* Paginación */}
-                <div className="flex justify-between items-center mt-4">
-                    <button
-                        onClick={() => setPage(prev => Math.max(1, prev - 1))}
-                        disabled={page === 1}
-                        className={`px-4 py-2 rounded-lg font-medium ${page === 1 ? 'bg-slate-700 text-slate-500 cursor-not-allowed' : 'bg-purple-600 text-white hover:bg-purple-700'}`}
-                    >
-                        Anterior
-                    </button>
-                    <span className="text-white">Página {page}</span>
-                    <button
-                        onClick={() => setPage(prev => prev + 1)}
-                        disabled={page === total}
-                        className={`px-4 py-2 rounded-lg font-medium ${page === total ? 'bg-slate-700 text-slate-500 cursor-not-allowed' : 'bg-purple-600 text-white hover:bg-purple-700'}`}
-                    >
-                        Siguiente
-                    </button>
-                </div>
+                <PaginationButtons
+                    page={page}
+                    setPage={setPage}
+                    activeTab={activeTab}
+                    totalIncoming={totalIncoming}
+                    totalOutgoing={totalOutgoing}
+                />
             </div>
-        </div>
+        </div >
     )
 }
