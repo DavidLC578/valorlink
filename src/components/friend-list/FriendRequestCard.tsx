@@ -10,8 +10,8 @@ export default function FriendRequestCard() {
     const [page, setPage] = useState(1)
     const [outgoing, setOutgoing] = useState<Player[]>([])
     const [incoming, setIncoming] = useState<Player[]>([])
-    const [totalIncoming, setTotalIncoming] = useState(0)
-    const [totalOutgoing, setTotalOutgoing] = useState(0)
+    const [totalIncoming, setTotalIncoming] = useState(1)
+    const [totalOutgoing, setTotalOutgoing] = useState(1)
 
     useEffect(() => {
         const handleOutgoing = async () => {
