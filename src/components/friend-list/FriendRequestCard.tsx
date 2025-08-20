@@ -23,7 +23,7 @@ export default function FriendRequestCard() {
             })
             const data = await res.json()
             setOutgoing(data.players)
-            setTotalOutgoing(data.total)
+            if (data.total > 0) setTotalOutgoing(data.total)
         }
         handleOutgoing()
     }, [page])
@@ -38,10 +38,30 @@ export default function FriendRequestCard() {
             })
             const data = await res.json()
             setIncoming(data.players)
-            setTotalIncoming(data.total)
+            if (data.total > 0) setTotalIncoming(data.total)
         }
         handleIncoming()
     }, [page])
+
+    const handleAccept = async (senderId: string) => {
+        const res = await fetch(`/api/friends/incoming/accept`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ senderId }),
+        })
+    }
+
+    const handleReject = async (senderId: string) => {
+        const res = await fetch(`/api/friends/incoming/reject`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ senderId }),
+        })
+    }
 
     return (
         <div className="bg-slate-800 p-6 rounded-xl border border-slate-600 lg:col-span-2">
@@ -107,10 +127,12 @@ export default function FriendRequestCard() {
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <button className="px-4 py-2 rounded-lg bg-green-500 text-white font-semibold">
+                                        <button onClick={() => handleAccept(player.userId)}
+                                            className="px-4 py-2 rounded-lg bg-green-500 text-white font-semibold">
                                             <Check className="w-4 h-4 text-white" />
                                         </button>
-                                        <button className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold">
+                                        <button onClick={() => handleReject(player.userId)}
+                                            className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold">
                                             <X className="w-4 h-4 text-white" />
                                         </button>
                                     </div>
