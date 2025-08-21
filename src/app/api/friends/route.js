@@ -34,12 +34,12 @@ export async function GET() {
             }
         })
 
-        console.log(friendships)
-
-        const friends = friendships.map(friendship => ({
-            ...(friendship.senderId === session.user.id ? friendship.receiver : friendship.sender),
-            friendshipId: friendship.id
-        }));
+        const friends = friendships.map(friendship => {
+            const friendData = friendship.senderId === session.user.id ?
+                friendship.receiver.Player :
+                friendship.receiver.Player;
+            return friendData;
+        });
 
         return NextResponse.json(friends, { status: 200 });
     } catch (error) {
