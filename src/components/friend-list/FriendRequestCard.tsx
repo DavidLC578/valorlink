@@ -70,14 +70,6 @@ export default function FriendRequestCard() {
                     <Clock className="w-6 h-6 text-purple-400" />
                     <h2 className="text-lg font-semibold text-white">Friend Request</h2>
                 </div>
-                <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-500" />
-                    <input
-                        type="text"
-                        placeholder="Search friend..."
-                        className="bg-slate-800/50 border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent"
-                    />
-                </div>
             </div>
 
             <div className="w-full">
