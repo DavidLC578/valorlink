@@ -1,6 +1,7 @@
 'use client'
 import { Player } from "@/generated/prisma";
 import { useState, useEffect } from "react";
+import UserIcon from "../UserIcon";
 
 export default function MyFriendsCard() {
     const [friendsData, setFriendsData] = useState<Player[]>([])
@@ -33,26 +34,17 @@ export default function MyFriendsCard() {
                     >
                         <div className="space-y-2">
                             <div className="flex items-start space-x-3">
-                                <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-purple-600 font-bold">
-                                    {friend.alias.charAt(0)}
-                                </div>
+                                <UserIcon alias={friend.alias} className="w-12 h-12 sm:w-11 sm:h-12 md:w-11 md:h-11" />
                                 <div className="min-w-0">
                                     <p className="text-slate-100 text-lg truncate">{friend.alias}</p>
                                 </div>
                             </div>
-
-                            <div className="max-h-20 overflow-y-auto pr-2">
-                                <p className="text-slate-300 text-sm line-clamp-3">
-                                    {friend.description}
-                                </p>
-                            </div>
-
-                            <div className="flex items-center space-x-4 pt-1">
-                                <span className="text-purple-400 font-medium">
-                                    {friend.rank.charAt(0).toUpperCase() + friend.rank.slice(1)}
+                            <div className="flex flex-col items-start space-y-1 pt-1">
+                                <span className="text-purple-400 font-semibold">
+                                    {friend.rank.toUpperCase()}
                                 </span>
                                 <span className="text-slate-300 text-sm">
-                                    {friend.region.toUpperCase()}
+                                    {friend.region.toUpperCase()} Region
                                 </span>
                             </div>
                         </div>
