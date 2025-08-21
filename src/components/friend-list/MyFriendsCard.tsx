@@ -34,7 +34,7 @@ export default function MyFriendsCard() {
                     >
                         <div className="space-y-2">
                             <div className="flex items-start space-x-3">
-                                <UserIcon alias={friend.alias} className="w-12 h-12 sm:w-11 sm:h-12 md:w-11 md:h-11" />
+                                <UserIcon alias={friend.alias} className="w-11 h-11 sm:w-11 sm:h-11 md:w-11 md:h-11" />
                                 <div className="min-w-0">
                                     <p className="text-slate-100 text-lg truncate">{friend.alias}</p>
                                 </div>
