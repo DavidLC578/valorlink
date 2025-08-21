@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { MapPin, Calendar, Trophy, Users, Gamepad2, Star, UserRoundCheck, UserRoundPlus } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
+import UserIcon from "@/components/UserIcon"
 
 function ProfileComponent() {
 
@@ -90,13 +91,7 @@ function ProfileComponent() {
                                     {/* Avatar */}
                                     <div className="flex-shrink-0">
                                         <div className="relative">
-                                            <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 p-1">
-                                                <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center">
-                                                    <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
-                                                        {playerInfo?.player.username?.charAt(0).toUpperCase()}
-                                                    </span>
-                                                </div>
-                                            </div>
+                                            <UserIcon alias={playerInfo?.player.username} className="w-12 h-12 sm:w-12 sm:h-12 md:w-12 md:h-12" />
                                             <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 bg-purple-500 rounded-full p-1.5 sm:p-2">
                                                 <Star className="w-3 h-3 sm:w-4 sm:h-4 text-white fill-white" />
                                             </div>
