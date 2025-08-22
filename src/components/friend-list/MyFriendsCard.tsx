@@ -5,25 +5,37 @@ import UserIcon from "../UserIcon";
 
 export default function MyFriendsCard() {
     const [friendsData, setFriendsData] = useState<Player[]>([])
+    const [totalPages, setTotalPages] = useState(1)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const fetchFriends = async () => {
-            const res = await fetch(`/api/friends`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            const data = await res.json()
-            console.log(data)
-            setFriendsData(data)
+            setIsLoading(true)
+            try {
+                const res = await fetch(`/api/friends?page=${currentPage}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                const data = await res.json()
+                setFriendsData(data.friends || [])
+                setTotalPages(Math.ceil((data.total || 1) / 3))
+            } catch (error) {
+                console.error('Error fetching friends:', error)
+            } finally {
+                setIsLoading(false)
+            }
         }
         fetchFriends()
-    }, [])
+    }, [currentPage])
 
     return (
         <div className="p-6 bg-slate-800 rounded-xl border border-slate-600">
-            <h2 className="text-xl font-bold mb-4">My Friends ({friendsData.length})</h2>
+            <h2 className="text-xl font-bold mb-4">
+                My Friends
+            </h2>
 
             {/* Friend Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -74,6 +86,47 @@ export default function MyFriendsCard() {
                     </div>
                 ))}
             </div>
+            {/* Pagination */}
+            <div className="flex justify-between items-center mt-4">
+                <button
+                    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                    disabled={currentPage === 1 || isLoading}
+                    className={`px-4 py-2 rounded-lg font-medium ${currentPage === 1 ? 'bg-slate-700 text-slate-500 cursor-not-allowed' : 'bg-purple-600 text-white hover:bg-purple-700'}`}
+                >
+                    Previous
+                </button>
+                <div className="flex gap-2">
+                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                        // Show max 5 pages in navigation
+                        let pageNum = i + 1;
+                        if (totalPages > 5) {
+                            // If there are more than 5 pages, show pages around the current page
+                            if (currentPage > 3) {
+                                pageNum = currentPage - 2 + i;
+                                if (pageNum > totalPages) return null;
+                            }
+                        }
+                        return (
+                            <button
+                                key={pageNum}
+                                onClick={() => setCurrentPage(pageNum)}
+                                className={`px-3 py-1 rounded ${currentPage === pageNum ? "bg-purple-600" : "bg-gray-700 hover:bg-gray-600"}`}
+                                disabled={isLoading}
+                            >
+                                {pageNum}
+                            </button>
+                        );
+                    })}
+
+                </div>
+                <button
+                    onClick={() => setCurrentPage(prev => prev + 1)}
+                    disabled={currentPage === totalPages || isLoading}
+                    className={`px-4 py-2 rounded-lg font-medium ${currentPage === totalPages || isLoading ? 'bg-slate-700 text-slate-500 cursor-not-allowed' : 'bg-purple-600 text-white hover:bg-purple-700'}`}
+                >
+                    Next
+                </button>
+            </div >
         </div>
     );
 };

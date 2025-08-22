@@ -3,8 +3,13 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import db from "@/libs/db";
 
-export async function GET() {
+export async function GET(request) {
+    const { searchParams } = request.nextUrl;
+    const page = searchParams.get("page") || "1"
+    const limit = 3
+
     const session = await getServerSession(authOptions)
+
     if (!session?.user?.id) {
         return NextResponse.json(
             { message: "Unauthorized: Please log in to continue" },
@@ -31,17 +36,28 @@ export async function GET() {
                         Player: true
                     }
                 }
-            }
+            },
+            take: limit,
+            skip: (page - 1) * limit
         })
 
         const friends = friendships.map(friendship => {
             const friendData = friendship.senderId === session.user.id ?
                 friendship.receiver.Player :
-                friendship.receiver.Player;
+                friendship.sender.Player;
             return friendData;
         });
 
-        return NextResponse.json(friends, { status: 200 });
+        const totalCount = await db.friendship.count({
+            where: {
+                OR: [
+                    { senderId: session.user.id, status: "ACCEPTED" },
+                    { receiverId: session.user.id, status: "ACCEPTED" }
+                ]
+            }
+        })
+
+        return NextResponse.json({ friends, total: totalCount }, { status: 200 });
     } catch (error) {
         console.error("Error fetching friends:", error);
         return NextResponse.json(
