@@ -15,6 +15,13 @@ export async function POST(request) {
             );
         }
 
+        if (!session?.user?.isProfileComplete) {
+            return NextResponse.json(
+                { message: "Please complete your profile to send a friend request" },
+                { status: 400 }
+            );
+        }
+
         const { username } = await request.json();
 
         // Validate input
