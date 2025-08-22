@@ -5,6 +5,8 @@ import { getToken } from 'next-auth/jwt';
 const protectedRoutes = [
     '/home',
     '/profile',
+    '/friend-list',
+    '/find-players'
 ];
 
 export async function middleware(req) {
@@ -37,5 +39,7 @@ export const config = {
         '/',
         '/home/:path*',
         '/profile/:path*',
+        '/friend-list/:path*',
+        '/find-players/:path*'
     ]
 };
