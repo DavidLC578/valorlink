@@ -37,6 +37,13 @@ export default function MyFriendsCard() {
                 My Friends
             </h2>
 
+            {/* Loading Spinner */}
+            {isLoading && (
+                <div className="flex justify-center py-8">
+                    <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-400 border-t-transparent"></div>
+                </div>
+            )}
+
             {/* Friend Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {friendsData.map((friend) => (
