@@ -8,9 +8,9 @@ export default function QuickActions() {
                 <Link href="/find-players" className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg text-lg transition cursor-pointer">
                     Find Players
                 </Link>
-                <button className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-lg text-lg transition cursor-pointer">
-                    Create Group
-                </button>
+                <Link href="/friend-list" className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-lg text-lg transition cursor-pointer">
+                    Friend List
+                </Link>
                 <Link href="/profile/create" className="bg-gray-800 border border-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg text-lg transition cursor-pointer">
                     Edit Profile
                 </Link>
