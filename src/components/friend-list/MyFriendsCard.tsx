@@ -7,11 +7,14 @@ export default function MyFriendsCard() {
     const [friendsData, setFriendsData] = useState<Player[]>([])
     const [totalPages, setTotalPages] = useState(1)
     const [currentPage, setCurrentPage] = useState(1)
-    const [isLoading, setIsLoading] = useState(true)
+    const [isInitialLoading, setIsInitialLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const fetchFriends = async () => {
-            setIsLoading(true)
+            if (isInitialLoading) {
+                setIsLoading(true)
+            }
             try {
                 const res = await fetch(`/api/friends?page=${currentPage}`, {
                     method: "GET",
@@ -26,10 +29,11 @@ export default function MyFriendsCard() {
                 console.error('Error fetching friends:', error)
             } finally {
                 setIsLoading(false)
+                setIsInitialLoading(false)
             }
         }
         fetchFriends()
-    }, [currentPage])
+    }, [currentPage, isInitialLoading])
 
     return (
         <div className="p-6 bg-slate-800 rounded-xl border border-slate-600">
@@ -37,15 +41,14 @@ export default function MyFriendsCard() {
                 My Friends
             </h2>
 
-            {/* Loading Spinner */}
-            {isLoading && (
-                <div className="flex justify-center py-8">
-                    <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-400 border-t-transparent"></div>
-                </div>
-            )}
-
             {/* Friend Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="relative min-h-[300px]">
+                {isInitialLoading && (
+                    <div className="absolute inset-0 flex justify-center items-center">
+                        <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-400 border-t-transparent"></div>
+                    </div>
+                )}
+                <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${isInitialLoading ? 'opacity-50' : ''}`}>
                 {friendsData.map((friend) => (
                     <div
                         key={friend.id}
@@ -92,6 +95,7 @@ export default function MyFriendsCard() {
                         </div>
                     </div>
                 ))}
+                </div>
             </div>
             {/* Pagination */}
             <div className="flex justify-between items-center mt-4">
