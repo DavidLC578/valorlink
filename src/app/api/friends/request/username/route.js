@@ -58,6 +58,13 @@ export async function POST(request) {
             );
         }
 
+        if (user.Player.availability === "Not available") {
+            return NextResponse.json(
+                { message: "User is not available" },
+                { status: 400 }
+            );
+        }
+
         // Check if there is already a request
         const existingRequest = await db.friendship.findFirst({
             where: {
