@@ -31,13 +31,23 @@ export async function POST(request) {
                 username: username.trim(),
                 id: { not: session.user.id } // Avoid searching for the own user
             },
-            select: { id: true }
+            select: {
+                id: true,
+                Player: true
+            }
         });
 
         if (!user) {
             return NextResponse.json(
                 { message: "No user found with that username" },
                 { status: 404 }
+            );
+        }
+
+        if (!user.Player) {
+            return NextResponse.json(
+                { message: "User does not have a profile" },
+                { status: 400 }
             );
         }
 
