@@ -67,9 +67,86 @@ export async function GET(request) {
         );
 
     }
+}
 
+export async function DELETE(request) {
+    const session = await getServerSession(authOptions);
 
+    if (!session?.user?.id) {
+        return NextResponse.json(
+            { message: "Unauthorized: Please log in to continue" },
+            { status: 401 }
+        );
+    }
 
+    try {
+        const { userId } = await request.json();
 
+        if (!userId) {
+            return NextResponse.json(
+                { message: "Friend ID is required" },
+                { status: 400 }
+            );
+        }
 
+        // Check if friendship exists
+        const existingFriendship = await db.friendship.findFirst({
+            where: {
+                OR: [
+                    {
+                        senderId: session.user.id,
+                        receiverId: userId,
+                        status: "ACCEPTED"
+                    },
+                    {
+                        senderId: userId,
+                        receiverId: session.user.id,
+                        status: "ACCEPTED"
+                    }
+                ]
+            }
+        });
+
+        if (!existingFriendship) {
+            return NextResponse.json(
+                { message: "Friendship not found or you don't have permission" },
+                { status: 404 }
+            );
+        }
+
+        // Delete friendship
+        const deletedFriendship = await db.friendship.delete({
+            where: {
+                id: existingFriendship.id
+            },
+            include: {
+                sender: {
+                    select: { Player: true }
+                },
+                receiver: {
+                    select: { Player: true }
+                }
+            }
+        });
+
+        return NextResponse.json({
+            message: "Friendship deleted successfully",
+            friendship: deletedFriendship
+        }, { status: 200 });
+
+    } catch (error) {
+        console.error("Error deleting friendship:", error);
+
+        if (error.code === 'P2025') {
+            return NextResponse.json(
+                { message: "Friendship doesn't exist or was already deleted" },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json(
+            { message: "Internal server error" },
+            { status: 500 }
+        );
+    }
 }
