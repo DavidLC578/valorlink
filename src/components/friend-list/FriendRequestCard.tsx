@@ -52,9 +52,12 @@ export default function FriendRequestCard() {
             },
             body: JSON.stringify({ senderId }),
         })
+        if (res.status === 200) {
+            setIncoming((prev) => prev.filter((player) => player.userId !== senderId))
+        }
     }
 
-    const handleReject = async (senderId: string) => {
+    const handleRejectIncoming = async (senderId: string) => {
         const res = await fetch(`/api/friends/incoming/reject`, {
             method: "POST",
             headers: {
@@ -62,6 +65,22 @@ export default function FriendRequestCard() {
             },
             body: JSON.stringify({ senderId }),
         })
+        if (res.status === 200) {
+            setIncoming((prev) => prev.filter((player) => player.userId !== senderId))
+        }
+    }
+
+    const handleRejectOutgoing = async (receiverId: string) => {
+        const res = await fetch(`/api/friends/outgoing/reject`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ receiverId }),
+        })
+        if (res.status === 200) {
+            setOutgoing((prev) => prev.filter((player) => player.userId !== receiverId))
+        }
     }
 
     return (
@@ -118,7 +137,7 @@ export default function FriendRequestCard() {
                                             className="px-4 py-2 rounded-lg bg-green-500 text-white font-semibold">
                                             <Check className="w-4 h-4 text-white" />
                                         </button>
-                                        <button onClick={() => handleReject(player.userId)}
+                                        <button onClick={() => handleRejectIncoming(player.userId)}
                                             className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold">
                                             <X className="w-4 h-4 text-white" />
                                         </button>
@@ -150,6 +169,10 @@ export default function FriendRequestCard() {
                                         <p className="text-sm py-1 px-2 rounded-lg bg-slate-400/20">
                                             Pending
                                         </p>
+                                        <button onClick={() => handleRejectOutgoing(player.userId)}
+                                            className="px-2 py-2 rounded-lg bg-red-500 text-white font-semibold">
+                                            <X className="w-4 h-4 text-white" />
+                                        </button>
                                     </div>
                                 </div>
                             ))))}

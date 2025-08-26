@@ -3,6 +3,7 @@ import { Player } from "@/generated/prisma";
 import { useState, useEffect } from "react";
 import UserIcon from "../UserIcon";
 import { X } from "lucide-react";
+import Link from "next/link";
 
 export default function MyFriendsCard() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -115,9 +116,9 @@ export default function MyFriendsCard() {
                                 <button className="flex-1 bg-purple-500 hover:bg-purple-700 px-3 py-2 rounded-xl font-semibold">
                                     Message
                                 </button>
-                                <button className="border border-solid border-slate-600 hover:border-gray-500 bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-xl">
+                                <Link href={`/profile/${friend.userId}`} className="border border-solid border-slate-600 hover:border-gray-500 bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-xl">
                                     Profile
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     ))}
