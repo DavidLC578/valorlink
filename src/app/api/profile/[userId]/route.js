@@ -26,7 +26,19 @@ export async function GET(request, { params }) {
             },
             select: {
                 username: true,
-                Player: true
+                Player: true,
+                friendsSent: {
+                    where: {
+                        status: "ACCEPTED",
+                        receiverId: session.user.id
+                    }
+                },
+                friendsReceived: {
+                    where: {
+                        status: "ACCEPTED",
+                        senderId: session.user.id
+                    }
+                }
             }
         })
         if (!player) {

@@ -39,6 +39,7 @@ function ProfileComponent() {
                     router.push('/home')
                 }
                 setPlayerInfo(data);
+                console.log(data);
             } catch (err) {
                 const errorMessage = err instanceof Error ? err.message : 'An error occurred';
                 setError(errorMessage);
@@ -69,6 +70,8 @@ function ProfileComponent() {
             console.error('Error sending friend request:', error);
         }
     }
+
+    const isFriend = playerInfo?.player.friendsReceived.some(friendship => friendship.status === 'ACCEPTED') || playerInfo?.player.friendsSent.some(friendship => friendship.status === 'ACCEPTED');
 
     return (
         <>
@@ -107,14 +110,14 @@ function ProfileComponent() {
                                             <p className="text-lg sm:text-xl text-purple-400">
                                                 @{playerInfo?.player.username}
                                             </p>
-                                            {!isOwner && (
+                                            {!isOwner && !isFriend && (
                                                 <div className="mt-4 sm:mt-6">
                                                     <button
                                                         className="group relative inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-800"
                                                         onClick={handleSendFriendRequest}
                                                     >
                                                         <UserRoundPlus className="w-5 h-5 mr-2" />
-                                                        Enviar solicitud
+                                                        Send friend request
                                                     </button>
                                                 </div>
                                             )}

@@ -1,3 +1,4 @@
+import { Friendship } from "@/generated/prisma";
 import { Dispatch, SetStateAction } from "react";
 
 export type WizardData = {
@@ -27,5 +28,7 @@ export type PlayerInfo = {
             rank: string;
             availability: string;
         } | null;
+        friendsSent: Friendship[];
+        friendsReceived: Friendship[];
     };
 }
