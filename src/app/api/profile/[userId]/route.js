@@ -29,13 +29,11 @@ export async function GET(request, { params }) {
                 Player: true,
                 friendsSent: {
                     where: {
-                        status: "ACCEPTED",
                         receiverId: session.user.id
                     }
                 },
                 friendsReceived: {
                     where: {
-                        status: "ACCEPTED",
                         senderId: session.user.id
                     }
                 }
